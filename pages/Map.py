@@ -7,7 +7,7 @@ import re
 # 페이지 설정
 st.set_page_config(layout="wide")
 st.title("📌 지역별 강수량 지도 시각화 (Folium)")
-st.write("깃허브에 업로드된 CSV를 자동으로 불러와 지도에 **하늘색 정사각형**과 강수량을 표시합니다.")
+st.write("깃허브에 업로드된 CSV를 자동으로 불러와 지도에 **파란빛 하늘색 정사각형**과 강수량을 표시합니다.")
 
 # ✅ 깃허브 RAW CSV URL
 CSV_URL = "https://raw.githubusercontent.com/Seo-YoonK/K-Region-Rain/main/rn_20250717112859.csv"
@@ -42,17 +42,17 @@ for _, row in df.iterrows():
         [lat + delta, lon + delta]
     ]
 
-    # 하늘색 정사각형
+    # 파란빛 하늘색 정사각형
     folium.Rectangle(
         bounds=bounds,
-        color="#87CEEB",        # 테두리 하늘색 (SkyBlue Hex)
+        color="#5DADE2",        # 조금 더 파란색이 섞인 하늘색
         fill=True,
-        fill_color="#87CEEB",   # 내부 하늘색
+        fill_color="#5DADE2",
         fill_opacity=0.4,
         tooltip=f"{region} : {rain}mm"
     ).add_to(m)
 
-    # 네모 중앙 강수량 표시 (굵은 흰색 글자)
+    # 네모 중앙 강수량 표시 (흰색 글자 + 검정 테두리)
     folium.Marker(
         location=[lat, lon],
         icon=folium.DivIcon(
@@ -61,8 +61,13 @@ for _, row in df.iterrows():
                 font-size:12px;
                 font-weight:bold;
                 color:white;
-                background-color:rgba(0,0,0,0.4);
-                border:1px solid #87CEEB;
+                text-shadow:
+                    -1px -1px 0 black,
+                    1px -1px 0 black,
+                    -1px 1px 0 black,
+                    1px 1px 0 black;
+                background-color:rgba(0,0,0,0.2);
+                border:1px solid #5DADE2;
                 border-radius:3px;
                 padding:2px;
                 text-align:center;">
